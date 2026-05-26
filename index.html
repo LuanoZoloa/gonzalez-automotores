@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gonzalez Automotores | Vehículos seleccionados, atención personalizada</title>
+<meta name="description" content="Encontrá tu próximo vehículo en Gonzalez Automotores. Vehículos seleccionados, permutas, consignaciones y atención personalizada.">
+<link rel="icon" href="img/Logo-gonzalez.jpg" type="image/jpeg">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config={theme:{extend:{colors:{dark:'#080808',darker:'#040404',card:'#0E0E0E',card2:'#121212',border:'#1C1C1C',border2:'#252525',accent:'#E42B2F',accentDark:'#B91C1F',accentGlow:'rgba(228,43,47,0.15)',white:'#FFFFFF',offwhite:'#EDEDED',muted:'#888888',subtle:'#555555',dimmed:'#333333'},fontFamily:{display:['Poppins','sans-serif'],body:['Inter','sans-serif']}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#080808;color:#fff;overflow-x:hidden}
+::selection{background:#E42B2F;color:#fff}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#080808}
+::-webkit-scrollbar-thumb{background:#252525;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#E42B2F}
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.hero-overlay{background:linear-gradient(180deg,rgba(8,8,8,.2) 0%,rgba(8,8,8,.45) 35%,rgba(8,8,8,.88) 70%,#080808 100%)}
+.card-hover{transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .4s ease}
+.card-hover:hover{transform:translateY(-5px);border-color:#333;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.vehicle-img{transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.group:hover .vehicle-img{transform:scale(1.05)}
+.nav-blur{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.btn-primary{background:#E42B2F;color:#fff;font-weight:600;transition:all .3s ease;letter-spacing:.01em}
+.btn-primary:hover{background:#B91C1F;box-shadow:0 8px 32px rgba(228,43,47,.3);transform:translateY(-1px)}
+.btn-outline{border:1px solid #333;color:#fff;transition:all .3s ease}
+.btn-outline:hover{border-color:#E42B2F;background:rgba(228,43,47,.06)}
+.btn-wa{background:#25D366;color:#fff;font-weight:600;transition:all .3s ease}
+.btn-wa:hover{background:#20bd5a;box-shadow:0 8px 32px rgba(37,211,102,.25);transform:translateY(-1px)}
+.pulse-wa{animation:pulseWa 2s infinite}
+@keyframes pulseWa{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.35)}50%{box-shadow:0 0 0 14px rgba(37,211,102,0)}}
+select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.accent-line{width:40px;height:3px;background:#E42B2F;border-radius:2px}
+.grain::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.015'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.red-glow{background:radial-gradient(ellipse at center,rgba(228,43,47,.08) 0%,transparent 70%)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:60;opacity:0;pointer-events:none;transition:opacity .35s ease}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-container{position:fixed;inset:0;z-index:61;overflow-y:auto;pointer-events:none;opacity:0;transition:opacity .35s ease}
+.modal-container.active{pointer-events:all;opacity:1}
+.modal-panel{max-width:960px;margin:2rem auto;background:#0E0E0E;border:1px solid #1C1C1C;border-radius:1.25rem;overflow:hidden;transform:translateY(24px) scale(.98);transition:transform .4s cubic-bezier(.16,1,.3,1);position:relative}
+.modal-container.active .modal-panel{transform:translateY(0) scale(1)}
+.modal-close{position:absolute;top:1rem;right:1rem;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(8,8,8,.7);backdrop-filter:blur(8px);border:1px solid #333;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s ease;color:#fff}
+.modal-close:hover{background:rgba(228,43,47,.2);border-color:#E42B2F}
+.gallery-main{position:relative;aspect-ratio:16/10;overflow:hidden;background:#040404}
+.gallery-main img{width:100%;height:100%;object-fit:cover;transition:opacity .4s ease}
+.gallery-nav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:rgba(8,8,8,.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;transition:all .2s ease;font-size:12px}
+.gallery-nav:hover{background:rgba(228,43,47,.3);border-color:rgba(228,43,47,.5)}
+.gallery-nav.prev{left:12px}
+.gallery-nav.next{right:12px}
+.gallery-thumbs{display:flex;gap:6px;padding:12px 16px;overflow-x:auto;background:#080808}
+.gallery-thumbs::-webkit-scrollbar{height:0}
+.gallery-thumb{width:64px;height:48px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:all .2s ease;flex-shrink:0;opacity:.5}
+.gallery-thumb.active,.gallery-thumb:hover{border-color:#E42B2F;opacity:1}
+.gallery-thumb img{width:100%;height:100%;object-fit:cover}
+.spec-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1C1C1C}
+.spec-item:last-child{border-bottom:none}
+.spec-icon{width:32px;height:32px;border-radius:8px;background:rgba(228,43,47,.06);border:1px solid rgba(228,43,47,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#E42B2F;font-size:11px}
+.spec-label{font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1.5px;line-height:1}
+.spec-value{font-size:13px;color:#EDEDED;font-weight:500;margin-top:2px}
+.gallery-counter{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(8,8,8,.7);backdrop-filter:blur(8px);padding:4px 12px;border-radius:20px;font-size:11px;color:#999;letter-spacing:1px;z-index:5}
+.step-number{font-family:'Poppins',sans-serif;font-weight:800;font-size:3.5rem;line-height:1;color:rgba(228,43,47,.1);position:absolute;top:-8px;left:50%;transform:translateX(-50%)}
+@media(max-width:640px){
+  .modal-panel{margin:.5rem;border-radius:1rem}
+  .gallery-main{aspect-ratio:4/3}
+}
+</style>
+</head>
+<body class="grain">
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20consultar%20por%20un%20veh%C3%ADculo" target="_blank" rel="noopener"
+   class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform pulse-wa" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp text-white text-2xl"></i>
+</a>
+
+<!-- Modal -->
+<div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
+<div id="modalContainer" class="modal-container">
+  <div class="modal-panel" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar"><i class="fas fa-times text-sm"></i></button>
+    <div class="gallery-main" id="galleryMain">
+      <img id="galleryImg" src="" alt="">
+      <button class="gallery-nav prev" onclick="galleryPrev()"><i class="fas fa-chevron-left"></i></button>
+      <button class="gallery-nav next" onclick="galleryNext()"><i class="fas fa-chevron-right"></i></button>
+      <div class="gallery-counter" id="galleryCounter"></div>
+    </div>
+    <div class="gallery-thumbs" id="galleryThumbs"></div>
+    <div class="p-6 md:p-8">
+      <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+        <div>
+          <h2 id="modalTitle" class="font-display text-2xl md:text-3xl font-bold tracking-tight"></h2>
+          <p id="modalSubtitle" class="text-muted text-[13px] mt-1"></p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <span id="modalPrice" class="font-display text-2xl md:text-3xl font-bold text-accent block"></span>
+          <span id="modalFinance" class="text-[11px] text-muted uppercase tracking-wider font-medium mt-1 block"></span>
+        </div>
+      </div>
+      <p id="modalDesc" class="text-muted text-[14px] leading-relaxed mb-8 border-b border-border pb-8"></p>
+      <h3 class="text-[11px] text-muted uppercase tracking-[3px] font-medium mb-4">Especificaciones</h3>
+      <div id="modalSpecs" class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 mb-8"></div>
+      <div class="bg-darker rounded-xl border border-border p-5 mb-8">
+        <h3 class="text-[11px] text-muted uppercase tracking-[3px] font-medium mb-4">Equipamiento destacado</h3>
+        <div id="modalBenefits" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      </div>
+      <a id="modalWaBtn" href="" target="_blank" rel="noopener" class="btn-wa w-full py-4 rounded-xl text-[15px] flex items-center justify-center gap-3">
+        <i class="fab fa-whatsapp text-xl"></i>
+        <span id="modalWaText"></span>
+      </a>
+      <p class="text-center text-subtle text-[11px] mt-3">Respuesta inmediata · Sin compromiso</p>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-500">
+  <div class="max-w-[1200px] mx-auto px-6 py-5 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3 group">
+      <img src="img/Logo-gonzalez.jpg" alt="Gonzalez Automotores" class="h-11 w-auto rounded-lg object-contain border border-dimmed/40 group-hover:border-accent/40 transition-colors">
+      <div class="hidden sm:block">
+        <span class="font-display text-[17px] font-bold text-white tracking-tight leading-none">GONZALEZ</span>
+        <span class="block text-[9px] text-muted uppercase tracking-[3px] mt-0.5 font-body font-medium">Automotores</span>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-[13px] text-muted font-medium">
+      <a href="#inicio" class="hover:text-accent transition-colors">Inicio</a>
+      <a href="#stock" class="hover:text-accent transition-colors">Stock</a>
+      <a href="#nosotros" class="hover:text-accent transition-colors">Nosotros</a>
+      <a href="#resenas" class="hover:text-accent transition-colors">Reseñas</a>
+      <a href="#contacto" class="hover:text-accent transition-colors">Contacto</a>
+    </div>
+    <a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20consultar%20por%20un%20veh%C3%ADculo" target="_blank" rel="noopener"
+       class="btn-primary px-5 py-2.5 rounded-full text-[13px] hidden sm:inline-flex items-center gap-2">
+      <i class="fab fa-whatsapp text-base"></i> WhatsApp
+    </a>
+    <!-- Mobile menu button -->
+    <button id="mobileMenuBtn" class="md:hidden flex flex-col gap-1.5 p-2" onclick="toggleMobileMenu()">
+      <span class="block w-5 h-[1.5px] bg-white transition-all" id="menuLine1"></span>
+      <span class="block w-5 h-[1.5px] bg-white transition-all" id="menuLine2"></span>
+      <span class="block w-3.5 h-[1.5px] bg-white transition-all" id="menuLine3"></span>
+    </button>
+  </div>
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden md:hidden bg-dark/95 nav-blur border-t border-border">
+    <div class="max-w-[1200px] mx-auto px-6 py-6 flex flex-col gap-4">
+      <a href="#inicio" onclick="toggleMobileMenu()" class="text-white text-[15px] font-medium py-2">Inicio</a>
+      <a href="#stock" onclick="toggleMobileMenu()" class="text-muted text-[15px] font-medium py-2 hover:text-white transition-colors">Stock</a>
+      <a href="#nosotros" onclick="toggleMobileMenu()" class="text-muted text-[15px] font-medium py-2 hover:text-white transition-colors">Nosotros</a>
+      <a href="#resenas" onclick="toggleMobileMenu()" class="text-muted text-[15px] font-medium py-2 hover:text-white transition-colors">Reseñas</a>
+      <a href="#contacto" onclick="toggleMobileMenu()" class="text-muted text-[15px] font-medium py-2 hover:text-white transition-colors">Contacto</a>
+      <a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20consultar%20por%20un%20veh%C3%ADculo" target="_blank" rel="noopener"
+         class="btn-wa px-6 py-3 rounded-full text-[14px] text-center mt-2 inline-flex items-center justify-center gap-2">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="inicio" class="relative min-h-screen flex items-end pb-16 md:items-center md:pb-0">
+  <div class="absolute inset-0">
+    <img src="img/Bmw-240-1.jpg" alt="BMW 240i" class="w-full h-full object-cover">
+    <div class="hero-overlay absolute inset-0"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark to-transparent"></div>
+  </div>
+  <div class="relative z-10 max-w-[1200px] mx-auto px-6 w-full md:pt-28">
+    <div class="max-w-2xl">
+      <div class="flex items-center gap-2 mb-6 fade-up">
+        <div class="accent-line"></div>
+        <span class="text-[11px] text-accent uppercase tracking-[4px] font-semibold">Gonzalez Automotores</span>
+      </div>
+      <h1 class="font-display text-[2.5rem] sm:text-[3.25rem] md:text-[4rem] lg:text-[4.5rem] font-bold leading-[1.05] mb-6 fade-up tracking-tight" style="transition-delay:.06s">
+        Encontrá tu próximo vehículo
+      </h1>
+      <p class="text-muted text-base md:text-lg leading-relaxed mb-10 max-w-lg fade-up" style="transition-delay:.12s">
+        Vehículos seleccionados, unidades 0km, permutas y atención personalizada.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 fade-up" style="transition-delay:.2s">
+        <a href="#stock" class="btn-primary px-8 py-4 rounded-full text-center text-[15px] inline-flex items-center justify-center gap-2">
+          <i class="fas fa-car text-sm"></i> Ver Stock
+        </a>
+        <a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20consultar%20por%20un%20veh%C3%ADculo" target="_blank" rel="noopener"
+           class="btn-outline px-8 py-4 rounded-full text-center text-[15px] inline-flex items-center justify-center gap-2">
+          <i class="fab fa-whatsapp text-[#25D366]"></i> Contactar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- Stats bar -->
+  <div class="absolute bottom-0 left-0 right-0 z-10">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-border/50 rounded-t-2xl overflow-hidden fade-up" style="transition-delay:.3s">
+        <div class="bg-card/80 backdrop-blur-sm px-6 py-5 text-center">
+          <i class="fas fa-check-circle text-accent text-sm mb-2 block"></i>
+          <span class="text-[12px] text-offwhite font-medium">Vehículos seleccionados</span>
+        </div>
+        <div class="bg-card/80 backdrop-blur-sm px-6 py-5 text-center">
+          <i class="fas fa-exchange-alt text-accent text-sm mb-2 block"></i>
+          <span class="text-[12px] text-offwhite font-medium">Permutas</span>
+        </div>
+        <div class="bg-card/80 backdrop-blur-sm px-6 py-5 text-center">
+          <i class="fas fa-handshake text-accent text-sm mb-2 block"></i>
+          <span class="text-[12px] text-offwhite font-medium">Consignaciones</span>
+        </div>
+        <div class="bg-card/80 backdrop-blur-sm px-6 py-5 text-center">
+          <i class="fas fa-headset text-accent text-sm mb-2 block"></i>
+          <span class="text-[12px] text-offwhite font-medium">Atención personalizada</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Search & Filters -->
+<section class="py-16 md:py-20">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="bg-card border border-border rounded-2xl p-6 md:p-10 fade-up">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+          <i class="fas fa-search text-accent text-xs"></i>
+        </div>
+        <h2 class="font-display text-xl md:text-2xl font-bold tracking-tight">Buscá tu vehículo</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+        <div>
+          <label class="block text-[10px] text-muted uppercase tracking-[2px] mb-2 font-medium">Marca</label>
+          <select id="filterBrand" onchange="filterVehicles()" class="w-full bg-darker border border-border rounded-xl px-4 py-3.5 text-white text-sm focus:border-accent/50 focus:outline-none transition-colors cursor-pointer">
+            <option value="">Todas las marcas</option>
+            <option>BMW</option>
+            <option>Chevrolet</option>
+            <option>Ford</option>
+            <option>Mercedes Benz</option>
+            <option>Renault</option>
+            <option>Volkswagen</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] text-muted uppercase tracking-[2px] mb-2 font-medium">Año</label>
+          <select id="filterYear" onchange="filterVehicles()" class="w-full bg-darker border border-border rounded-xl px-4 py-3.5 text-white text-sm focus:border-accent/50 focus:outline-none transition-colors cursor-pointer">
+            <option value="">Cualquier año</option>
+            <option>2026</option>
+            <option>2021</option>
+            <option>2019</option>
+            <option>2018</option>
+            <option>2016</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] text-muted uppercase tracking-[2px] mb-2 font-medium">Combustible</label>
+          <select id="filterFuel" onchange="filterVehicles()" class="w-full bg-darker border border-border rounded-xl px-4 py-3.5 text-white text-sm focus:border-accent/50 focus:outline-none transition-colors cursor-pointer">
+            <option value="">Indistinto</option>
+            <option>Nafta</option>
+            <option>Nafta/Eléctrico</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] text-muted uppercase tracking-[2px] mb-2 font-medium">Transmisión</label>
+          <select id="filterTrans" onchange="filterVehicles()" class="w-full bg-darker border border-border rounded-xl px-4 py-3.5 text-white text-sm focus:border-accent/50 focus:outline-none transition-colors cursor-pointer">
+            <option value="">Todas</option>
+            <option>Manual</option>
+            <option>Automática</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex items-center justify-between">
+        <span id="filterCount" class="text-muted text-[12px]">6 vehículos encontrados</span>
+        <button onclick="resetFilters()" class="text-accent text-[12px] font-medium hover:text-white transition-colors">Limpiar filtros</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stock Destacado -->
+<section id="stock" class="py-16 md:py-24 bg-darker">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-14 fade-up">
+      <div>
+        <div class="flex items-center gap-2 mb-3">
+          <div class="accent-line"></div>
+          <span class="text-[11px] text-accent uppercase tracking-[4px] font-semibold">Stock disponible</span>
+        </div>
+        <h2 class="font-display text-3xl md:text-[2.75rem] font-bold tracking-tight">Vehículos destacados</h2>
+      </div>
+      <span class="text-muted text-[13px] flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+        <span id="stockCount">6 unidades disponibles</span>
+      </span>
+    </div>
+    <div id="vehicleGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    <div id="noResults" class="hidden text-center py-16 fade-up">
+      <i class="fas fa-search text-dimmed text-3xl mb-4 block"></i>
+      <p class="text-muted text-[15px]">No se encontraron vehículos con los filtros seleccionados.</p>
+      <button onclick="resetFilters()" class="text-accent text-[14px] font-medium mt-3 hover:underline">Limpiar filtros</button>
+    </div>
+  </div>
+</section>
+
+<!-- Nosotros -->
+<section id="nosotros" class="py-20 md:py-28">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <div class="flex items-center gap-2 justify-center mb-3">
+        <div class="accent-line"></div>
+        <span class="text-[11px] text-accent uppercase tracking-[4px] font-semibold">Sobre nosotros</span>
+        <div class="accent-line"></div>
+      </div>
+      <h2 class="font-display text-3xl md:text-[2.75rem] font-bold tracking-tight leading-tight">¿Por qué elegir<br>Gonzalez Automotores?</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="bg-card border border-border rounded-2xl p-8 card-hover fade-up" style="transition-delay:.04s">
+        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-5"><i class="fas fa-user-tie text-accent text-base"></i></div>
+        <h3 class="font-display text-lg font-bold mb-2.5 tracking-tight">Atención personalizada</h3>
+        <p class="text-muted text-[13px] leading-relaxed">Te acompañamos en todo el proceso, desde la elección hasta la entrega de tu vehículo.</p>
+      </div>
+      <div class="bg-card border border-border rounded-2xl p-8 card-hover fade-up" style="transition-delay:.08s">
+        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-5"><i class="fas fa-shield-alt text-accent text-base"></i></div>
+        <h3 class="font-display text-lg font-bold mb-2.5 tracking-tight">Vehículos seleccionados</h3>
+        <p class="text-muted text-[13px] leading-relaxed">Cada unidad pasa por una revisión exhaustiva para garantizar calidad y confiabilidad.</p>
+      </div>
+      <div class="bg-card border border-border rounded-2xl p-8 card-hover fade-up" style="transition-delay:.12s">
+        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-5"><i class="fas fa-exchange-alt text-accent text-base"></i></div>
+        <h3 class="font-display text-lg font-bold mb-2.5 tracking-tight">Permutas</h3>
+        <p class="text-muted text-[13px] leading-relaxed">Tomamos tu usado como parte de pago con tasación justa y transparente.</p>
+      </div>
+      <div class="bg-card border border-border rounded-2xl p-8 card-hover fade-up" style="transition-delay:.16s">
+        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-5"><i class="fas fa-handshake text-accent text-base"></i></div>
+        <h3 class="font-display text-lg font-bold mb-2.5 tracking-tight">Consignaciones</h3>
+        <p class="text-muted text-[13px] leading-relaxed">Dejá tu vehículo en consignación y nos encargamos de venderlo por vos.</p>
+      </div>
+      <div class="bg-card border border-border rounded-2xl p-8 card-hover fade-up" style="transition-delay:.2s">
+        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-5"><i class="fas fa-bolt text-accent text-base"></i></div>
+        <h3 class="font-display text-lg font-bold mb-2.5 tracking-tight">Gestión rápida</h3>
+        <p class="text-muted text-[13px] leading-relaxed">Transferencias, documentación y trámites resueltos con agilidad profesional.</p>
+      </div>
+      <div class="bg-card border border-border rounded-2xl p-8 card-hover fade-up" style="transition-delay:.24s">
+        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/15 flex items-center justify-center mb-5"><i class="fas fa-comments text-accent text-base"></i></div>
+        <h3 class="font-display text-lg font-bold mb-2.5 tracking-tight">Asesoramiento profesional</h3>
+        <p class="text-muted text-[13px] leading-relaxed">Te orientamos para que tomes la mejor decisión según tus necesidades.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cómo Trabajamos -->
+<section class="py-20 md:py-28 bg-darker">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <div class="flex items-center gap-2 justify-center mb-3">
+        <div class="accent-line"></div>
+        <span class="text-[11px] text-accent uppercase tracking-[4px] font-semibold">Proceso</span>
+        <div class="accent-line"></div>
+      </div>
+      <h2 class="font-display text-3xl md:text-[2.75rem] font-bold tracking-tight">Cómo trabajamos</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-5 relative">
+      <div class="hidden md:block absolute top-12 left-[14%] right-[14%] h-px bg-border"></div>
+      <div class="text-center fade-up relative" style="transition-delay:.04s">
+        <div class="w-24 h-24 rounded-2xl bg-card border border-border flex items-center justify-center mx-auto mb-6 relative z-10">
+          <i class="fas fa-car text-accent text-xl"></i>
+        </div>
+        <span class="font-display text-accent text-[11px] font-bold uppercase tracking-[3px] mb-2 block">Paso 01</span>
+        <h3 class="font-display text-lg font-bold mb-2 tracking-tight">Elegís tu vehículo</h3>
+        <p class="text-muted text-[13px] leading-relaxed max-w-[220px] mx-auto">Explorá nuestro stock y encontrá el auto que se adapta a lo que buscás.</p>
+      </div>
+      <div class="text-center fade-up relative" style="transition-delay:.08s">
+        <div class="w-24 h-24 rounded-2xl bg-card border border-border flex items-center justify-center mx-auto mb-6 relative z-10">
+          <i class="fas fa-calendar-check text-accent text-xl"></i>
+        </div>
+        <span class="font-display text-accent text-[11px] font-bold uppercase tracking-[3px] mb-2 block">Paso 02</span>
+        <h3 class="font-display text-lg font-bold mb-2 tracking-tight">Coordinamos visita</h3>
+        <p class="text-muted text-[13px] leading-relaxed max-w-[220px] mx-auto">Acordamos un día y horario para que lo veas en persona sin compromiso.</p>
+      </div>
+      <div class="text-center fade-up relative" style="transition-delay:.12s">
+        <div class="w-24 h-24 rounded-2xl bg-card border border-border flex items-center justify-center mx-auto mb-6 relative z-10">
+          <i class="fas fa-search-dollar text-accent text-xl"></i>
+        </div>
+        <span class="font-display text-accent text-[11px] font-bold uppercase tracking-[3px] mb-2 block">Paso 03</span>
+        <h3 class="font-display text-lg font-bold mb-2 tracking-tight">Evaluamos tu permuta</h3>
+        <p class="text-muted text-[13px] leading-relaxed max-w-[220px] mx-auto">Tasamos tu vehículo actual de forma justa y transparente.</p>
+      </div>
+      <div class="text-center fade-up relative" style="transition-delay:.16s">
+        <div class="w-24 h-24 rounded-2xl bg-card border border-border flex items-center justify-center mx-auto mb-6 relative z-10">
+          <i class="fas fa-key text-accent text-xl"></i>
+        </div>
+        <span class="font-display text-accent text-[11px] font-bold uppercase tracking-[3px] mb-2 block">Paso 04</span>
+        <h3 class="font-display text-lg font-bold mb-2 tracking-tight">Entregamos tu vehículo</h3>
+        <p class="text-muted text-[13px] leading-relaxed max-w-[220px] mx-auto">Con la documentación en regla, te entregamos tu próximo auto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reseñas -->
+<section id="resenas" class="py-20 md:py-28">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="text-center mb-16 fade-up">
+      <div class="flex items-center gap-2 justify-center mb-3">
+        <div class="accent-line"></div>
+        <span class="text-[11px] text-accent uppercase tracking-[4px] font-semibold">Testimonios</span>
+        <div class="accent-line"></div>
+      </div>
+      <h2 class="font-display text-3xl md:text-[2.75rem] font-bold tracking-tight">Lo que dicen nuestros clientes</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="bg-card border border-border rounded-2xl p-8 card-hover fade-up" style="transition-delay:.04s">
+        <div class="flex gap-1 mb-5">
+          <i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i>
+        </div>
+        <p class="text-offwhite text-[14px] leading-[1.7] mb-7">"Compré mi Golf GTI con Gonzalez Automotores y fue todo impecable. Excelente atención, me asesoraron con cada detalle y la documentación estuvo lista en tiempo récord. 100% recomendable."</p>
+        <div class="flex items-center gap-3 pt-5 border-t border-border">
+          <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center"><span class="text-accent font-semibold text-[12px]">ML</span></div>
+          <div><span class="text-white text-[13px] font-semibold block">Martín López</span><span class="text-subtle text-[11px]">Buenos Aires</span></div>
+        </div>
+      </div>
+      <div class="bg-card border border-border rounded-2xl p-8 card-hover fade-up" style="transition-delay:.08s">
+        <div class="flex gap-1 mb-5">
+          <i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i>
+        </div>
+        <p class="text-offwhite text-[14px] leading-[1.7] mb-7">"Dejé mi auto en consignación y lo vendieron en menos de una semana. Todo transparente, con comunicación constante. Un placer trabajar con gente profesional y honesta."</p>
+        <div class="flex items-center gap-3 pt-5 border-t border-border">
+          <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center"><span class="text-accent font-semibold text-[12px]">CF</span></div>
+          <div><span class="text-white text-[13px] font-semibold block">Carolina Fernández</span><span class="text-subtle text-[11px]">Córdoba</span></div>
+        </div>
+      </div>
+      <div class="bg-card border border-border rounded-2xl p-8 card-hover fade-up" style="transition-delay:.12s">
+        <div class="flex gap-1 mb-5">
+          <i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i><i class="fas fa-star text-accent text-[12px]"></i>
+        </div>
+        <p class="text-offwhite text-[14px] leading-[1.7] mb-7">"Permutamos nuestro auto familiar por una Duster y el proceso fue super simple. Se encargaron de todo, nos dieron un precio justo por el usado y la atención fue de primera."</p>
+        <div class="flex items-center gap-3 pt-5 border-t border-border">
+          <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center"><span class="text-accent font-semibold text-[12px]">SR</span></div>
+          <div><span class="text-white text-[13px] font-semibold block">Santiago Romero</span><span class="text-subtle text-[11px]">Mar del Plata</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram -->
+<section class="py-16 md:py-20 bg-darker">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="bg-card border border-border rounded-2xl p-10 md:p-14 text-center fade-up relative overflow-hidden">
+      <div class="absolute -top-32 -right-32 w-64 h-64 bg-accent/[.04] rounded-full blur-[80px]"></div>
+      <div class="relative z-10">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] flex items-center justify-center mx-auto mb-6">
+          <i class="fab fa-instagram text-white text-2xl"></i>
+        </div>
+        <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-3">Seguinos en Instagram</h2>
+        <p class="text-muted text-[15px] mb-8 max-w-md mx-auto">Mirá las últimas unidades, novedades y publicaciones en nuestro perfil.</p>
+        <a href="https://instagram.com/gonzalez_automotor" target="_blank" rel="noopener"
+           class="btn-outline px-8 py-3.5 rounded-full text-[14px] inline-flex items-center gap-2 font-medium">
+          <i class="fab fa-instagram text-[#E1306C]"></i> @gonzalez_automotor
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mapa -->
+<section class="py-16 md:py-20">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="fade-up">
+      <div class="flex items-center gap-2 mb-6">
+        <div class="accent-line"></div>
+        <span class="text-[11px] text-accent uppercase tracking-[4px] font-semibold">Ubicación</span>
+      </div>
+      <div class="rounded-2xl overflow-hidden border border-border" style="height:360px">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52556.41!2d-58.45!3d-34.61!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccb1a!2sBuenos%20Aires!5e0!3m2!1ses!2sar!4v1" width="100%" height="100%" style="border:0;filter:invert(90%) hue-rotate(180deg) grayscale(30%)" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Final -->
+<section id="contacto" class="py-24 md:py-32 relative overflow-hidden bg-darker">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] red-glow rounded-full blur-[100px]"></div>
+  <div class="relative z-10 max-w-[750px] mx-auto px-6 text-center fade-up">
+    <img src="img/Logo-gonzalez.jpg" alt="Gonzalez Automotores" class="w-20 h-auto rounded-xl object-contain mx-auto mb-8 border border-border">
+    <h2 class="font-display text-3xl sm:text-4xl md:text-[2.75rem] font-bold tracking-tight leading-tight mb-4">¿Listo para encontrar tu próximo vehículo?</h2>
+    <p class="text-muted text-base mb-10 max-w-md mx-auto">Escribinos y recibí atención personalizada. Sin compromiso.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="https://wa.me/5491100000000?text=Hola%2C%20quiero%20consultar%20por%20un%20veh%C3%ADculo" target="_blank" rel="noopener"
+         class="btn-wa px-9 py-4 rounded-full text-[15px] inline-flex items-center justify-center gap-2">
+        <i class="fab fa-whatsapp text-lg"></i> Hablar por WhatsApp
+      </a>
+      <a href="https://instagram.com/gonzalez_automotor" target="_blank" rel="noopener"
+         class="btn-outline px-9 py-4 rounded-full text-[15px] inline-flex items-center justify-center gap-2">
+        <i class="fab fa-instagram text-[#E1306C]"></i> Ver Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-14 border-t border-border">
+  <div class="max-w-[1200px] mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <img src="img/Logo-gonzalez.jpg" alt="Gonzalez Automotores" class="h-12 w-auto rounded-lg object-contain border border-dimmed/40">
+          <div>
+            <span class="font-display text-[17px] font-bold text-white tracking-tight leading-none">GONZALEZ</span>
+            <span class="block text-[9px] text-muted uppercase tracking-[3px] mt-0.5 font-body font-medium">Automotores</span>
+          </div>
+        </div>
+        <p class="text-subtle text-[13px] leading-relaxed mt-3">Vehículos seleccionados.<br>Atención personalizada.</p>
+      </div>
+      <div>
+        <h4 class="font-medium text-[11px] uppercase tracking-[3px] mb-5 text-muted">Contacto</h4>
+        <div class="space-y-3">
+          <a href="https://wa.me/5491100000000" target="_blank" rel="noopener" class="flex items-center gap-3 text-subtle text-[13px] hover:text-accent transition-colors">
+            <i class="fab fa-whatsapp w-4 text-center"></i> WhatsApp
+          </a>
+          <a href="https://instagram.com/gonzalez_automotor" target="_blank" rel="noopener" class="flex items-center gap-3 text-subtle text-[13px] hover:text-accent transition-colors">
+            <i class="fab fa-instagram w-4 text-center"></i> @gonzalez_automotor
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-medium text-[11px] uppercase tracking-[3px] mb-5 text-muted">Horarios</h4>
+        <div class="space-y-2 text-subtle text-[13px]">
+          <p>Lunes a Viernes: 9:00 – 18:00</p>
+          <p>Sábados: 9:00 – 13:00</p>
+          <p class="text-dimmed text-[12px] mt-3">Atención por WhatsApp 24/7</p>
+        </div>
+      </div>
+    </div>
+    <div class="mt-12 pt-7 border-t border-border text-center">
+      <p class="text-dimmed text-[11px] tracking-wide">&copy; 2026 Gonzalez Automotores. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const WA='5491100000000';
+
+const vehicles=[
+  {
+    id:1,
+    brand:'Volkswagen',
+    model:'Golf GTI MK7.5',
+    version:'2.0 TSI · DSG',
+    year:2021,
+    km:'54.000 km',
+    price:'Consultar',
+    transmission:'Automática DSG',
+    fuel:'Nafta',
+    engine:'2.0 TSI Turbo',
+    color:'Rojo',
+    condition:'Excelente',
+    type:'Hatchback',
+    description:'El ícono deportivo de Volkswagen en su mejor versión. Motor 2.0 TSI con caja DSG, suspensión deportiva, interior premium con asientos deportivos y toda la tecnología que caracteriza al GTI.',
+    benefits:['Caja DSG','Asientos deportivos','Control de tracción','Multimedia táctil','Sensor de lluvia','Climatizador automático'],
+    waText:'Hola, me interesa el VOLKSWAGEN GOLF GTI MK7.5 2021. ¿Sigue disponible?',
+    images:['img/Golf-GTI-1.jpg']
+  },
+  {
+    id:2,
+    brand:'Ford',
+    model:'Territory Hybrid',
+    version:'1.5 Turbo · Automática',
+    year:2026,
+    km:'0 km',
+    price:'Consultar',
+    transmission:'Automática',
+    fuel:'Nafta/Eléctrico',
+    engine:'1.5 Turbo Hybrid',
+    color:'A confirmar',
+    condition:'0km',
+    type:'SUV',
+    description:'La nueva Ford Territory Hybrid combina tecnología híbrida con un diseño moderno y espacioso. Motor 1.5 Turbo con asistencia eléctrica, equipamiento completo y la última tecnología en seguridad.',
+    benefits:['Tecnología Hybrid','Pantalla multimedia','Cámara 360°','Asistente de conducción','Techo panorámico','Cargador inalámbrico'],
+    waText:'Hola, me interesa la FORD TERRITORY HYBRID 0KM. ¿Sigue disponible?',
+    images:['img/Ford-territory-1.jpg']
+  },
+  {
+    id:3,
+    brand:'BMW',
+    model:'240i',
+    version:'3.0 TwinPower Turbo',
+    year:2018,
+    km:'56.000 km',
+    price:'Consultar',
+    transmission:'Automática',
+    fuel:'Nafta',
+    engine:'3.0 TwinPower Turbo',
+    color:'Blanco',
+    condition:'Excelente',
+    type:'Coupé',
+    description:'Deportividad pura con el motor 3.0 TwinPower Turbo de 6 cilindros en línea. Tracción trasera, suspensión deportiva adaptativa y un interior premium con acabados de primera calidad.',
+    benefits:['Motor 6 cilindros','Tracción trasera','Suspensión deportiva','Interior cuero','Navegación GPS','Sensores de estacionamiento'],
+    waText:'Hola, me interesa el BMW 240i 2018. ¿Sigue disponible?',
+    images:['img/Bmw-240-1.jpg']
+  },
+  {
+    id:4,
+    brand:'Chevrolet',
+    model:'Silverado Z71',
+    version:'5.3 V8 · 0km',
+    year:2026,
+    km:'0 km',
+    price:'Consultar',
+    transmission:'Automática',
+    fuel:'Nafta',
+    engine:'5.3 V8',
+    color:'A confirmar',
+    condition:'0km',
+    type:'Pickup',
+    description:'La pickup full-size más potente del mercado. Motor V8 5.3L con caja automática, tracción 4x4, paquete Z71 off-road y equipamiento completo para trabajo y aventura.',
+    benefits:['Motor V8 5.3L','Paquete Z71 Off-Road','Tracción 4x4','Multimedia Chevrolet','Cámara trasera','Diferencial trasero bloqueante'],
+    waText:'Hola, me interesa la CHEVROLET SILVERADO Z71 0KM. ¿Sigue disponible?',
+    images:['img/Chevrolet-silverado-1.jpg']
+  },
+  {
+    id:5,
+    brand:'Mercedes Benz',
+    model:'CLA 200 Urban',
+    version:'1.6 · Automática',
+    year:2019,
+    km:'53.000 km',
+    price:'Consultar',
+    transmission:'Automática',
+    fuel:'Nafta',
+    engine:'1.6 Turbo',
+    color:'Gris',
+    condition:'Excelente',
+    type:'Sedán',
+    description:'Elegancia y tecnología Mercedes Benz en un coupé de cuatro puertas. Motor 1.6 Turbo, línea Urban con terminaciones premium, sistema COMAND y asistentes de conducción avanzados.',
+    benefits:['Sistema COMAND','Tapizado cuero/tela','Sensor de lluvia','Climatizador','Faros LED','Llantas de aleación'],
+    waText:'Hola, me interesa el MERCEDES BENZ CLA 200 URBAN 2019. ¿Sigue disponible?',
+    images:['img/Mercedes-cla-200-1.jpg']
+  },
+  {
+    id:6,
+    brand:'Renault',
+    model:'Duster Privilege',
+    version:'1.6 · 4x2',
+    year:2016,
+    km:'139.000 km',
+    price:'Consultar',
+    transmission:'Manual',
+    fuel:'Nafta',
+    engine:'1.6 16v',
+    color:'Gris',
+    condition:'Muy bueno',
+    type:'SUV',
+    description:'SUV versátil, económica y con excelente espacio interior. Versión Privilege con equipamiento completo, ideal para uso familiar y viajes. Motor 1.6 confiable y de bajo mantenimiento.',
+    benefits:['Tracción 4x2','Aire acondicionado','Dirección asistida','Multimedia','Barras de techo','Llantas de aleación'],
+    waText:'Hola, me interesa la RENAULT DUSTER PRIVILEGE 2016. ¿Sigue disponible?',
+    images:['img/Renault-duster-1.jpg']
+  }
+];
+
+function filterVehicles(){
+  const brand=document.getElementById('filterBrand').value;
+  const year=document.getElementById('filterYear').value;
+  const fuel=document.getElementById('filterFuel').value;
+  const trans=document.getElementById('filterTrans').value;
+  const filtered=vehicles.filter(v=>{
+    if(brand && v.brand!==brand) return false;
+    if(year && v.year!=year) return false;
+    if(fuel && v.fuel!==fuel) return false;
+    if(trans){
+      if(trans==='Manual' && v.transmission!=='Manual') return false;
+      if(trans==='Automática' && !v.transmission.toLowerCase().includes('automática') && !v.transmission.toLowerCase().includes('dsg')) return false;
+    }
+    return true;
+  });
+  renderCards(filtered);
+}
+
+function resetFilters(){
+  document.getElementById('filterBrand').value='';
+  document.getElementById('filterYear').value='';
+  document.getElementById('filterFuel').value='';
+  document.getElementById('filterTrans').value='';
+  renderCards(vehicles);
+}
+
+function renderCards(list){
+  list=list||vehicles;
+  const grid=document.getElementById('vehicleGrid');
+  const noRes=document.getElementById('noResults');
+  document.getElementById('filterCount').textContent=list.length+' vehículo'+(list.length!==1?'s':'')+' encontrado'+(list.length!==1?'s':'');
+  document.getElementById('stockCount').textContent=list.length+' unidad'+(list.length!==1?'es':'')+' disponible'+(list.length!==1?'s':'');
+  if(list.length===0){grid.innerHTML='';noRes.classList.remove('hidden');return}
+  noRes.classList.add('hidden');
+  grid.innerHTML=list.map((v,i)=>{
+    const waUrl=`https://wa.me/${WA}?text=${encodeURIComponent(v.waText)}`;
+    const delay=(i%3)*0.04;
+    const badge=v.condition==='0km'?'<div class="absolute top-4 left-4"><span class="bg-accent text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">0KM</span></div>':'';
+    return `
+    <div class="group bg-card border border-border rounded-2xl overflow-hidden card-hover fade-up" style="transition-delay:${delay}s">
+      <div class="relative overflow-hidden aspect-[4/3] cursor-pointer" onclick="openModal(${v.id})">
+        <img src="${v.images[0]}" alt="${v.brand} ${v.model}" class="w-full h-full object-cover vehicle-img" loading="lazy">
+        ${badge}
+        <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-dark/60 to-transparent"></div>
+        <div class="absolute bottom-3 right-3 bg-dark/60 backdrop-blur-md text-white text-[10px] px-2.5 py-1 rounded-full border border-white/10"><i class="fas fa-expand mr-1"></i>Ver detalle</div>
+      </div>
+      <div class="p-5">
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div>
+            <h3 class="font-display text-lg font-bold tracking-tight leading-tight">${v.brand} ${v.model}</h3>
+            <p class="text-muted text-[12px] mt-0.5">${v.version}</p>
+          </div>
+          <span class="text-[10px] text-muted uppercase tracking-wider bg-white/[.04] border border-border px-2 py-1 rounded-md flex-shrink-0">${v.type}</span>
+        </div>
+        <div class="flex items-center gap-4 text-[12px] text-muted mb-4">
+          <span class="flex items-center gap-1.5"><i class="fas fa-calendar-alt text-[10px] text-subtle"></i> ${v.year}</span>
+          <span class="flex items-center gap-1.5"><i class="fas fa-road text-[10px] text-subtle"></i> ${v.km}</span>
+          <span class="flex items-center gap-1.5"><i class="fas fa-gas-pump text-[10px] text-subtle"></i> ${v.fuel}</span>
+        </div>
+        <div class="border-t border-border pt-4 flex items-center justify-between gap-3">
+          <span class="text-accent font-display text-[1.15rem] font-bold">${v.price}</span>
+          <div class="flex gap-2">
+            <button onclick="openModal(${v.id})" class="btn-outline px-3.5 py-2 rounded-full text-[11px] font-medium flex items-center gap-1.5">
+              <i class="fas fa-info-circle text-[9px]"></i> Ver más
+            </button>
+            <a href="${waUrl}" target="_blank" rel="noopener" class="bg-[#25D366] hover:bg-[#20bd5a] text-white px-3.5 py-2 rounded-full text-[11px] font-medium flex items-center gap-1.5 transition-colors">
+              <i class="fab fa-whatsapp text-[13px]"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el=>observer.observe(el));
+}
+
+let currentVehicle=null,currentImgIdx=0;
+
+function openModal(id){
+  currentVehicle=vehicles.find(v=>v.id===id);
+  if(!currentVehicle) return;
+  currentImgIdx=0;
+  const v=currentVehicle;
+  const waUrl=`https://wa.me/${WA}?text=${encodeURIComponent(v.waText)}`;
+
+  document.getElementById('galleryImg').src=v.images[0];
+  document.getElementById('galleryImg').alt=v.brand+' '+v.model;
+  document.getElementById('galleryCounter').textContent=`1 / ${v.images.length}`;
+  document.getElementById('galleryThumbs').innerHTML=v.images.map((img,i)=>
+    `<div class="gallery-thumb ${i===0?'active':''}" onclick="goToSlide(${i})"><img src="${img}" alt="Foto ${i+1}" loading="lazy"></div>`
+  ).join('');
+
+  document.getElementById('modalTitle').textContent=v.brand+' '+v.model;
+  document.getElementById('modalSubtitle').textContent=v.version+' · '+v.year+' · '+v.km;
+  document.getElementById('modalPrice').textContent=v.price;
+  document.getElementById('modalFinance').textContent=v.condition==='0km'?'Unidad 0km':'';
+  document.getElementById('modalDesc').textContent=v.description;
+
+  const specs=[
+    {icon:'fa-car',label:'Marca / Modelo',value:v.brand+' '+v.model},
+    {icon:'fa-calendar-alt',label:'Año',value:v.year},
+    {icon:'fa-road',label:'Kilometraje',value:v.km},
+    {icon:'fa-cogs',label:'Transmisión',value:v.transmission},
+    {icon:'fa-gas-pump',label:'Combustible',value:v.fuel},
+    {icon:'fa-tachometer-alt',label:'Motor',value:v.engine},
+    {icon:'fa-palette',label:'Color',value:v.color},
+    {icon:'fa-check-circle',label:'Estado',value:v.condition},
+    {icon:'fa-exchange-alt',label:'Permuta',value:'Sí, aceptamos'},
+    {icon:'fa-tag',label:'Precio',value:v.price}
+  ];
+  document.getElementById('modalSpecs').innerHTML=specs.map(s=>
+    `<div class="spec-item"><div class="spec-icon"><i class="fas ${s.icon}"></i></div><div><div class="spec-label">${s.label}</div><div class="spec-value">${s.value}</div></div></div>`
+  ).join('');
+
+  document.getElementById('modalBenefits').innerHTML=v.benefits.map(b=>
+    `<div class="flex items-center gap-2.5"><div class="w-5 h-5 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0"><i class="fas fa-check text-accent text-[8px]"></i></div><span class="text-offwhite text-[13px]">${b}</span></div>`
+  ).join('');
+
+  document.getElementById('modalWaBtn').href=waUrl;
+  document.getElementById('modalWaText').textContent='Consultar por '+v.brand+' '+v.model+' '+v.year;
+
+  document.getElementById('modalOverlay').classList.add('active');
+  document.getElementById('modalContainer').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.getElementById('modalContainer').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+function goToSlide(idx){
+  if(!currentVehicle) return;
+  currentImgIdx=idx;
+  document.getElementById('galleryImg').src=currentVehicle.images[idx];
+  document.getElementById('galleryCounter').textContent=`${idx+1} / ${currentVehicle.images.length}`;
+  document.querySelectorAll('.gallery-thumb').forEach((t,i)=>t.classList.toggle('active',i===idx));
+}
+function galleryPrev(){if(!currentVehicle)return;currentImgIdx=(currentImgIdx-1+currentVehicle.images.length)%currentVehicle.images.length;goToSlide(currentImgIdx)}
+function galleryNext(){if(!currentVehicle)return;currentImgIdx=(currentImgIdx+1)%currentVehicle.images.length;goToSlide(currentImgIdx)}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if(e.key==='ArrowLeft')galleryPrev();if(e.key==='ArrowRight')galleryNext()});
+
+// Mobile menu
+function toggleMobileMenu(){
+  const menu=document.getElementById('mobileMenu');
+  menu.classList.toggle('hidden');
+}
+
+// Intersection Observer
+const observer=new IntersectionObserver(entries=>{entries.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// Navbar scroll
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>60){nav.classList.add('bg-dark/95','nav-blur','border-b','border-border');nav.querySelector('div').classList.replace('py-5','py-3')}
+  else{nav.classList.remove('bg-dark/95','nav-blur','border-b','border-border');nav.querySelector('div').classList.replace('py-3','py-5')}
+});
+
+renderCards();
+</script>
+</body>
+</html>
